@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Page Not Found | Zaynayan App</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <style>
+        :root {
+            /* ===== LIGHT MODE VARIABLES ===== */
+            --zayn-primary: #10B981;
+            --zayn-secondary: #F59E0B;
+            --zayn-accent: #8B5CF6;
+            --zayn-background: #F9FAFB;
+            --zayn-surface: #E5E7EB;
+            --zayn-text-primary: #1F2937;
+            --zayn-text-secondary: #6B7280;
+            --zayn-success: #84CC16;
+            --zayn-danger: #F43F5E;
+
+            /* ===== ACTIVE THEME (Default: Light) ===== */
+            --primary-color: var(--zayn-primary);
+            --secondary-color: var(--zayn-secondary);
+            --accent-color: var(--zayn-accent);
+            --bg-color: var(--zayn-background);
+            --surface-color: var(--zayn-surface);
+            --text-primary: var(--zayn-text-primary);
+        }
+
+        /* ===== DARK MODE ===== */
+        :root.dark {
+            --primary-color: #0ea371;
+            --secondary-color: #d18e09;
+            --accent-color: #7c4df5;
+            --bg-color: #111827;
+            --surface-color: #1F2937;
+            --text-primary: #E5E7EB;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            transition: all 0.3s ease;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .error-container {
+            max-width: 600px;
+            margin: 0 auto;
+            text-align: center;
+            padding: 2rem;
+            background-color: var(--surface-color);
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .error-icon {
+            font-size: 5rem;
+            color: var(--zayn-danger);
+            margin-bottom: 1.5rem;
+        }
+
+        h1 {
+            color: var(--primary-color);
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        p {
+            color: var(--text-primary);
+            opacity: 0.9;
+            margin-bottom: 2rem;
+        }
+
+        .btn-home {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            border: none;
+            border-radius: 50px;
+            padding: 12px 25px;
+            font-weight: 600;
+            color: white;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(16, 185, 129, 0.3);
+        }
+
+        .btn-home:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(16, 185, 129, 0.4);
+            color: white;
+        }
+
+        .theme-toggle {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+            z-index: 100;
+            cursor: pointer;
+            border: none;
+            outline: none;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); }
+            70% { box-shadow: 0 0 0 15px rgba(16, 185, 129, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+        }
+    </style>
+</head>
+<body>
+    <div class="error-container animate__animated animate__fadeIn">
+        <div class="error-icon animate__animated animate__bounceIn">
+            <i class="fas fa-exclamation-triangle"></i>
+        </div>
+        <h1 class="animate__animated animate__fadeInDown">404 - Page Not Found</h1>
+        <p class="animate__animated animate__fadeIn animate__delay-1s">
+            Oops! The page you're looking for doesn't exist or has been moved.
+        </p>
+        <a href="/" class="btn-home animate__animated animate__fadeInUp animate__delay-1s">
+            <i class="fas fa-home"></i> Back to Home
+        </a>
+    </div>
+
+    <button class="theme-toggle" id="themeToggle">
+        <i class="fas fa-moon" id="themeIcon"></i>
+    </button>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Theme Toggle Functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const themeToggle = document.getElementById('themeToggle');
+            const themeIcon = document.getElementById('themeIcon');
+            const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)');
+            
+            // Check for saved theme or preferred scheme
+            const currentTheme = localStorage.getItem('theme');
+            if (currentTheme === 'dark' || (!currentTheme && prefersDarkScheme.matches)) {
+                document.documentElement.classList.add('dark');
+                themeIcon.classList.replace('fa-moon', 'fa-sun');
+            }
+            
+            // Toggle theme
+            themeToggle.addEventListener('click', function() {
+                const isDark = document.documentElement.classList.toggle('dark');
+                if (isDark) {
+                    themeIcon.classList.replace('fa-moon', 'fa-sun');
+                    localStorage.setItem('theme', 'dark');
+                } else {
+                    themeIcon.classList.replace('fa-sun', 'fa-moon');
+                    localStorage.setItem('theme', 'light');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
